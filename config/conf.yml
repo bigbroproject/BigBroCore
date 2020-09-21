@@ -1,0 +1,10 @@
+services:
+  - name: Facebook
+    protocols:
+      - type: https
+        port: 443
+        server: facebook.com
+  - name: DNS
+    protocols:
+      - type: icmp
+        server: 8.8.8.8
