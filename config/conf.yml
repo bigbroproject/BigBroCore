@@ -20,3 +20,6 @@ services:
       - type: icmp6
         server: 2a00:1450:400a:804::2004
         interval : 5000
+      - type: ftp
+        server: 1.1.1.1
+        interval : 1000

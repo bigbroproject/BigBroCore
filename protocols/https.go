@@ -1,29 +1,27 @@
 package protocols
 
 import (
-	"github.com/moneye/internal/models"
+	"github.com/moneye/models"
 	"net/http"
 	"strconv"
 	"time"
 )
 
-type Http struct {
-	Protocol models.Protocol
-}
+type Https struct {}
 
 // If error is nil, then service is up
-func (https *Http) CheckService() error {
+func (https Https) CheckService(Protocol models.Protocol) error {
 	// CHECK
 	tr := &http.Transport{
 		MaxIdleConns:    10,
 		IdleConnTimeout: 30 * time.Second,
 	}
 	client := &http.Client{Transport: tr}
-	url := "http://" + https.Protocol.Server
-	if https.Protocol.Port == 0 {
-		url += ":80"
+	url := "https://" + Protocol.Server
+	if Protocol.Port == 0 {
+		url += ":443"
 	} else {
-		url += ":" + strconv.Itoa(https.Protocol.Port)
+		url += ":"+strconv.Itoa(Protocol.Port)
 	}
 	_, err := client.Get(url)
 	return err

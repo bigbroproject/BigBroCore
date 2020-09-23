@@ -3,7 +3,7 @@ package utilities
 import (
 	"fmt"
 	"github.com/fatih/color"
-	"github.com/moneye/internal/models"
+	"github.com/moneye/models"
 	"log"
 	"strconv"
 	"time"
