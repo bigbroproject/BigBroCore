@@ -17,6 +17,7 @@ func main() {
 	}
 	log.Println(*conf)
 	processesChannel := make(chan string)
+
 	for i := range conf.Services {
 		service := conf.Services[i]
 		for i2 := range service.Protocols {
@@ -26,9 +27,8 @@ func main() {
 				https := protocols.Https{
 					protocol,
 				}
-
 				proc := process.NewProcess(func() {
-					err = utilities.PrintStatus(&service, &protocol, https.CheckService())
+					utilities.PrintStatus(&service, &protocol, https.CheckService())
 				}, processesChannel)
 				process.ScheduleProcess(proc, protocol.Interval)
 				//err = utilities.PrintStatus(&service, &protocol, https.CheckService())
@@ -38,7 +38,7 @@ func main() {
 					protocol,
 				}
 				proc := process.NewProcess(func() {
-					err = utilities.PrintStatus(&service, &protocol, http.CheckService())
+					utilities.PrintStatus(&service, &protocol, http.CheckService())
 				}, processesChannel)
 				process.ScheduleProcess(proc, protocol.Interval)
 
@@ -49,7 +49,7 @@ func main() {
 					protocol,
 				}
 				proc := process.NewProcess(func() {
-					err = utilities.PrintStatus(&service, &protocol, icmp.CheckService())
+					utilities.PrintStatus(&service, &protocol, icmp.CheckService())
 				}, processesChannel)
 				process.ScheduleProcess(proc, protocol.Interval)
 				//err = utilities.PrintStatus(&service, &protocol, icmp.CheckService())
@@ -59,7 +59,7 @@ func main() {
 					protocol,
 				}
 				proc := process.NewProcess(func() {
-					err = utilities.PrintStatus(&service, &protocol, icmp6.CheckService())
+					utilities.PrintStatus(&service, &protocol, icmp6.CheckService())
 				}, processesChannel)
 				process.ScheduleProcess(proc, protocol.Interval)
 				//err = utilities.PrintStatus(&service, &protocol, icmp6.CheckService())
@@ -69,7 +69,6 @@ func main() {
 		}
 
 	}
-
 	for {
 		time.Sleep(100 * time.Millisecond)
 	}
