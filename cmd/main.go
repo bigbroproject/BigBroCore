@@ -26,6 +26,12 @@ func main() {
 				}
 				err = utilities.PrintStatus(&service, &protocol, https.CheckService())
 				break
+			case "http":
+				http := protocols.Http{
+					protocol,
+				}
+				err = utilities.PrintStatus(&service, &protocol, http.CheckService())
+				break
 			case "icmp":
 				icmp := protocols.Icmp{
 					protocol,

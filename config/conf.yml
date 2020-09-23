@@ -1,8 +1,12 @@
 services:
-  - name: Facebook
+  - name: Facebook (ssl)
     protocols:
       - type: https
         port: 443
+        server: facebook.com
+  - name: Facebook
+    protocols:
+      - type: http
         server: facebook.com
   - name: Google DNS
     protocols:
