@@ -4,7 +4,11 @@ services:
       - type: https
         port: 443
         server: facebook.com
-  - name: DNS
+  - name: Google DNS
     protocols:
       - type: icmp
         server: 8.8.8.8
+  - name: Google DNS6
+    protocols:
+      - type: icmp6
+        server: 2a00:1450:400a:804::2004

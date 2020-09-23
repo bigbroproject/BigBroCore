@@ -3,14 +3,14 @@ package main
 import (
 	"github.com/moneye/internal/models"
 	"github.com/moneye/internal/protocols"
+	"github.com/moneye/internal/utilities"
 	"log"
 )
 
-
 func main() {
 
-	conf,err := models.ConfigFromFile("config/conf.yml")
-	if(err!=nil){
+	conf, err := models.ConfigFromFile("config/conf.yml")
+	if err != nil {
 		log.Fatal(err)
 	}
 	log.Println(*conf)
@@ -22,17 +22,25 @@ func main() {
 			switch protocol.Type {
 			case "https":
 				https := protocols.Https{
-				protocol,
+					protocol,
 				}
-				err = https.CheckService()
-				if err !=nil {
-					log.Printf("[%s - %s - %s - %d] Status ERROR. %s",service.Name,protocol.Type,protocol.Server,protocol.Port,err.Error())
-
-				}else {
-					log.Printf("[%s - %s - %s - %d] Status OK.",service.Name,protocol.Type,protocol.Server,protocol.Port)
+				err = utilities.PrintStatus(&service, &protocol, https.CheckService())
+				break
+			case "icmp":
+				icmp := protocols.Icmp{
+					protocol,
 				}
+				err = utilities.PrintStatus(&service, &protocol, icmp.CheckService())
+				break
+			case "icmp6":
+				icmp6 := protocols.Icmp6{
+					protocol,
+				}
+				err = utilities.PrintStatus(&service, &protocol, icmp6.CheckService())
+				break
 			}
+
 		}
+
 	}
 }
-
