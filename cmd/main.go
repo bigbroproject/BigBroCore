@@ -2,9 +2,11 @@ package main
 
 import (
 	"github.com/moneye/internal/models"
+	"github.com/moneye/internal/process"
 	"github.com/moneye/internal/protocols"
 	"github.com/moneye/internal/utilities"
 	"log"
+	"time"
 )
 
 func main() {
@@ -14,7 +16,7 @@ func main() {
 		log.Fatal(err)
 	}
 	log.Println(*conf)
-
+	processesChannel := make(chan string)
 	for i := range conf.Services {
 		service := conf.Services[i]
 		for i2 := range service.Protocols {
@@ -24,29 +26,51 @@ func main() {
 				https := protocols.Https{
 					protocol,
 				}
-				err = utilities.PrintStatus(&service, &protocol, https.CheckService())
+
+				proc := process.NewProcess(func() {
+					err = utilities.PrintStatus(&service, &protocol, https.CheckService())
+				}, processesChannel)
+				process.ScheduleProcess(proc, protocol.Interval)
+				//err = utilities.PrintStatus(&service, &protocol, https.CheckService())
 				break
 			case "http":
 				http := protocols.Http{
 					protocol,
 				}
-				err = utilities.PrintStatus(&service, &protocol, http.CheckService())
+				proc := process.NewProcess(func() {
+					err = utilities.PrintStatus(&service, &protocol, http.CheckService())
+				}, processesChannel)
+				process.ScheduleProcess(proc, protocol.Interval)
+
+				//err = utilities.PrintStatus(&service, &protocol, http.CheckService())
 				break
 			case "icmp":
 				icmp := protocols.Icmp{
 					protocol,
 				}
-				err = utilities.PrintStatus(&service, &protocol, icmp.CheckService())
+				proc := process.NewProcess(func() {
+					err = utilities.PrintStatus(&service, &protocol, icmp.CheckService())
+				}, processesChannel)
+				process.ScheduleProcess(proc, protocol.Interval)
+				//err = utilities.PrintStatus(&service, &protocol, icmp.CheckService())
 				break
 			case "icmp6":
 				icmp6 := protocols.Icmp6{
 					protocol,
 				}
-				err = utilities.PrintStatus(&service, &protocol, icmp6.CheckService())
+				proc := process.NewProcess(func() {
+					err = utilities.PrintStatus(&service, &protocol, icmp6.CheckService())
+				}, processesChannel)
+				process.ScheduleProcess(proc, protocol.Interval)
+				//err = utilities.PrintStatus(&service, &protocol, icmp6.CheckService())
 				break
 			}
 
 		}
 
+	}
+
+	for {
+		time.Sleep(100 * time.Millisecond)
 	}
 }

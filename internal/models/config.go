@@ -6,34 +6,34 @@ import (
 )
 
 type Protocol struct {
-	Type string `yaml:"type"`
-	Port int `yaml:"port"`
-	Server string `yaml:"server"`
+	Type     string `yaml:"type"`
+	Port     int    `yaml:"port"`
+	Server   string `yaml:"server"`
+	Interval int64  `yaml:"interval"`
 }
 
-type Service struct{
-	Name string `yaml:"name"`
+type Service struct {
+	Name      string     `yaml:"name"`
 	Protocols []Protocol `yaml:"protocols"`
 }
 
-
-type Config struct{
+type Config struct {
 	Services []Service `yaml:"services"`
 }
 
 /**
-	Get config from yaml file
- */
-func ConfigFromFile(filePath string ) (*Config,error){
+Get config from yaml file
+*/
+func ConfigFromFile(filePath string) (*Config, error) {
 	dat, err := ioutil.ReadFile(filePath)
-	if err!=nil {
+	if err != nil {
 		return nil, err
 	}
 
 	conf := Config{}
 	err = yaml.Unmarshal([]byte(dat), &conf)
-	if err!=nil {
+	if err != nil {
 		return nil, err
 	}
-	return &conf,nil
+	return &conf, nil
 }

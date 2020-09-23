@@ -4,15 +4,19 @@ services:
       - type: https
         port: 443
         server: facebook.com
+        interval : 1000
   - name: Facebook
     protocols:
       - type: http
         server: facebook.com
+        interval : 1000
   - name: Google DNS
     protocols:
       - type: icmp
         server: 8.8.8.8
+        interval : 1000
   - name: Google DNS6
     protocols:
       - type: icmp6
         server: 2a00:1450:400a:804::2004
+        interval : 5000
