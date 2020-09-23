@@ -8,7 +8,7 @@ services:
   - name: Facebook
     protocols:
       - type: http
-        server: facebook.com
+        server: google.com
         interval : 1000
   - name: Google DNS
     protocols:
