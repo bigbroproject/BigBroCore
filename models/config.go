@@ -10,7 +10,13 @@ type Protocol struct {
 	Port     int    `yaml:"port"`
 	Server   string `yaml:"server"`
 	Interval int64  `yaml:"interval"`
+	Customs Entry  `yaml:"customs"`
 }
+
+type Entry map[string]string
+
+
+
 
 type Service struct {
 	Name      string     `yaml:"name"`
