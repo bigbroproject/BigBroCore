@@ -1,17 +1,16 @@
 package main
 
 import (
-	"log"
+	"github.com/moneye/protocols"
+	"github.com/moneye/responsehandlers"
 )
 
 func main() {
 
-	regInterfaces,err := Initialize()
-	if err != nil {
-		log.Fatal(err.Error())
-	}
-	//protocols.RegisterInterface(&regInterfaces,"ftp", protocols.FTP{})
-	Start(regInterfaces)
+	regProtocolInterfaces, regResponseHandlerInterfaces := Initialize()
+	protocols.RegisterProtocolInterface(&regProtocolInterfaces,"ftp", protocols.FTP{})
+	responsehandlers.RegisterHandlerInterface(&regResponseHandlerInterfaces,"console",responsehandlers.ConsoleHandler{})
+	Start(regProtocolInterfaces,regResponseHandlerInterfaces)
 
 }
 
