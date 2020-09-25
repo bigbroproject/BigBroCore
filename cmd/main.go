@@ -14,7 +14,7 @@ func main() {
 
 	// Register custom Response Handler
 	responsehandlers.RegisterResponseHandlerInterface(&regResponseHandlerInterfaces, "output1", responsehandlers.ConsoleHandlerWithMemory{})
-	responsehandlers.RegisterResponseHandlerInterface(&regResponseHandlerInterfaces, "output2", responsehandlers.ConsoleHandler{})
+	//responsehandlers.RegisterResponseHandlerInterface(&regResponseHandlerInterfaces, "output2", responsehandlers.ConsoleHandler{})
 
 	// Start monitoring
 	Start(regProtocolInterfaces, regResponseHandlerInterfaces)

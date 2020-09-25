@@ -29,6 +29,8 @@ func Start(registeredProtocolInterfaces map[string]protocols.ProtocolInterface, 
 	responseChannel := make(chan response.Response)
 
 	startResponseBroadcaster(&responseChannel, &registeredResponseHandlerInterfaces)
+	log.Printf("[%s] Starting Handlers complete!", color.New(color.FgHiBlue).SprintFunc()("Complete"))
+
 
 	if err != nil {
 		log.Fatal(err.Error())
@@ -38,10 +40,8 @@ func Start(registeredProtocolInterfaces map[string]protocols.ProtocolInterface, 
 		for i2 := range service.Protocols {
 			protocol := service.Protocols[i2]
 			protocolInterface := registeredProtocolInterfaces[protocol.Type]
-
 			if protocols.IsRegistered(&registeredProtocolInterfaces, protocol.Type) {
 				proc := process.NewProcess(func() {
-
 					if err = protocolInterface.CheckService(protocol); err == nil { // SUCCESS RESP
 						responseChannel <- response.Response{
 							ServiceName:  service.Name,
@@ -58,6 +58,7 @@ func Start(registeredProtocolInterfaces map[string]protocols.ProtocolInterface, 
 
 				}, processesChannel)
 				process.ScheduleProcess(proc, protocol.Interval)
+
 			} else {
 				red := color.New(color.FgRed).SprintFunc()
 				log.Println(fmt.Sprintf("[%s] [%s] [%s] [%s - %s - %s] An error as accured: %s", red("ERRO"), time.Now().Format(time.RFC3339), service.Name, protocol.Type, protocol.Server, protocol.Port, "ProtocolInterface "+protocol.Type+" not registered!"))
@@ -65,6 +66,8 @@ func Start(registeredProtocolInterfaces map[string]protocols.ProtocolInterface, 
 
 		}
 	}
+
+	//
 	for {
 		time.Sleep(100 * time.Millisecond)
 	}
