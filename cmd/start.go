@@ -18,6 +18,8 @@ func Initialize() (map[string]protocols.ProtocolInterface, map[string]responseha
 
 func Start(registeredProtocolInterfaces map[string]protocols.ProtocolInterface, registeredResponseHandlerInterfaces map[string]responsehandlers.ResponseHandlerInterface) {
 
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
+
 	conf, err := models.ConfigFromFile("config/conf.yml")
 	if err != nil {
 		log.Fatal(err)
@@ -26,8 +28,7 @@ func Start(registeredProtocolInterfaces map[string]protocols.ProtocolInterface, 
 	processesChannel := make(chan string)
 	responseChannel := make(chan response.Response)
 
-	//startResponseHandlers(&responseChannel,registeredResponseHandlerInterfaces)
-	startResponseBroadcaster(&responseChannel, registeredResponseHandlerInterfaces)
+	startResponseBroadcaster(&responseChannel, &registeredResponseHandlerInterfaces)
 
 	if err != nil {
 		log.Fatal(err.Error())
@@ -69,26 +70,28 @@ func Start(registeredProtocolInterfaces map[string]protocols.ProtocolInterface, 
 	}
 }
 
-func startResponseBroadcaster(c *chan response.Response, interfaces map[string]responsehandlers.ResponseHandlerInterface) {
+
+func startResponseBroadcaster(responseChannel *chan response.Response, responseHandlers *map[string]responsehandlers.ResponseHandlerInterface ) {
+	chanArray := make([]*chan response.Response,0)
+	// Create channels and start handlers
+	for _, handler := range *responseHandlers {
+		channel := make(chan response.Response)
+		chanArray = append(chanArray,&channel)
+
+		// Start handler on created channel
+		handler := handler
+		go func() {
+			handler.Handle(&channel)
+		}()
+	}
+
+	// Start endless loop that read from responsChannel and publish on handlers channels
 	go func() {
 		for {
-			resp := <-*c
-			for _, itInterface := range interfaces {
-				*itInterface.GetReceiveChannel() <- resp
+			resp := <- *responseChannel
+			for _, channel := range chanArray {
+				*channel <- resp
 			}
 		}
 	}()
-
 }
-
-/*
-func startResponseHandlers(responseChannel *chan response.Response, registeredResponseHandlerInterfaces map[string]responsehandlers.ResponseHandlerInterface) {
-	//registeredResponseHandlers := registeredResponseHandlerInterfaces
-	for s := range registeredResponseHandlerInterfaces {
-		go func() {
-			registeredResponseHandlerInterfaces[s].Handle(responseChannel)
-		}()
-	}
-	log.Printf("Response Handlers registered!")
-}
-*/

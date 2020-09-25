@@ -3,8 +3,7 @@ package responsehandlers
 import "github.com/moneye/models/response"
 
 type ResponseHandlerInterface interface {
-	Handle()
-	GetReceiveChannel() *chan response.Response
+	Handle(*chan response.Response)
 }
 
 func RegisterResponseHandlerInterface(registeredResponseHandlerInterfaces *map[string]ResponseHandlerInterface, responseInterfaceName string, responseHandlerInterface ResponseHandlerInterface) {
