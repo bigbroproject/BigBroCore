@@ -1,6 +1,6 @@
 package response
 
-import "github.com/moneye/models"
+import "github.com/bigbrocore/models"
 
 type ResponseType string
 

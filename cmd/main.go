@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/moneye/protocols"
-	"github.com/moneye/responsehandlers"
+	protocols "github.com/bigbrocore/protocols"
+	"github.com/bigbrocore/responsehandlers"
 )
 
 func main() {
@@ -13,8 +13,8 @@ func main() {
 	protocols.RegisterProtocolInterface(&regProtocolInterfaces, "ftp", protocols.FTP{})
 
 	// Register custom Response Handler
-	responsehandlers.RegisterResponseHandlerInterface(&regResponseHandlerInterfaces, "output1", responsehandlers.ConsoleHandlerWithMemory{})
-	//responsehandlers.RegisterResponseHandlerInterface(&regResponseHandlerInterfaces, "output2", responsehandlers.ConsoleHandler{})
+	responsehandlers.RegisterResponseHandlerInterface(&regResponseHandlerInterfaces, "consoleWithMemory", responsehandlers.ConsoleHandlerWithMemory{})
+	responsehandlers.RegisterResponseHandlerInterface(&regResponseHandlerInterfaces, "console", responsehandlers.ConsoleHandler{})
 
 	// Start monitoring
 	Start(regProtocolInterfaces, regResponseHandlerInterfaces)

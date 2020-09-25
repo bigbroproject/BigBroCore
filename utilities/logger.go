@@ -2,8 +2,8 @@ package utilities
 
 import (
 	"fmt"
+	"github.com/bigbrocore/models"
 	"github.com/fatih/color"
-	"github.com/moneye/models"
 	"log"
 	"strconv"
 	"time"

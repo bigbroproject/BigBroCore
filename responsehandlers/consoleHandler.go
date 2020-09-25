@@ -2,8 +2,8 @@ package responsehandlers
 
 import (
 	"fmt"
+	"github.com/bigbrocore/models/response"
 	"github.com/fatih/color"
-	"github.com/moneye/models/response"
 	"log"
 	"strconv"
 	"time"

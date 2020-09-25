@@ -1,6 +1,6 @@
 package protocols
 
-import "github.com/moneye/models"
+import "github.com/bigbrocore/models"
 
 type ProtocolInterface interface {
 	CheckService(Protocol models.Protocol) error // Check if protocol is OK or ERROR

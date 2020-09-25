@@ -1,4 +1,4 @@
-module github.com/moneye
+module github.com/bigbrocore
 
 go 1.15
 
