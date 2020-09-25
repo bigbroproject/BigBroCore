@@ -8,8 +8,12 @@ import (
 func main() {
 
 	regProtocolInterfaces, regResponseHandlerInterfaces := Initialize()
+
+	// Register custom protocol
 	protocols.RegisterProtocolInterface(&regProtocolInterfaces,"ftp", protocols.FTP{})
-	responsehandlers.RegisterHandlerInterface(&regResponseHandlerInterfaces,"console",responsehandlers.ConsoleHandler{})
+
+	// Register custom Response Handler
+	responsehandlers.RegisterResponseHandlerInterface(&regResponseHandlerInterfaces,"console",responsehandlers.ConsoleHandler{})
 	Start(regProtocolInterfaces,regResponseHandlerInterfaces)
 
 }

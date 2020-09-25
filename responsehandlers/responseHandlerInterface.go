@@ -8,7 +8,7 @@ type ResponseHandlerInterface interface {
 
 
 
-func RegisterHandlerInterface(registeredResponseHandlerInterfaces *map[string]ResponseHandlerInterface, responseInterfaceName string, responseHandlerInterface ResponseHandlerInterface) {
+func RegisterResponseHandlerInterface(registeredResponseHandlerInterfaces *map[string]ResponseHandlerInterface, responseInterfaceName string, responseHandlerInterface ResponseHandlerInterface) {
 	(*registeredResponseHandlerInterfaces)[responseInterfaceName] = responseHandlerInterface
 }
 
