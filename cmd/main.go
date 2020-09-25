@@ -10,12 +10,11 @@ func main() {
 	regProtocolInterfaces, regResponseHandlerInterfaces := Initialize()
 
 	// Register custom protocol
-	protocols.RegisterProtocolInterface(&regProtocolInterfaces,"ftp", protocols.FTP{})
+	protocols.RegisterProtocolInterface(&regProtocolInterfaces, "ftp", protocols.FTP{})
 
 	// Register custom Response Handler
-	responsehandlers.RegisterResponseHandlerInterface(&regResponseHandlerInterfaces,"console",responsehandlers.ConsoleHandlerWithMemory{})
-	Start(regProtocolInterfaces,regResponseHandlerInterfaces)
+	responsehandlers.RegisterResponseHandlerInterface(&regResponseHandlerInterfaces, "output1", responsehandlers.ConsoleHandlerWithMemory{})
+	responsehandlers.RegisterResponseHandlerInterface(&regResponseHandlerInterfaces, "output2", responsehandlers.ConsoleHandler{})
+	Start(regProtocolInterfaces, regResponseHandlerInterfaces)
 
 }
-
-
