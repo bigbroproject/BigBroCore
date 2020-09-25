@@ -67,7 +67,7 @@ func Start(registeredProtocolInterfaces map[string]protocols.ProtocolInterface, 
 		}
 	}
 
-	//
+
 	for {
 		time.Sleep(100 * time.Millisecond)
 	}
