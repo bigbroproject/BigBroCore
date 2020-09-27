@@ -86,7 +86,7 @@ func startResponseBroadcaster(responseChannel *chan response.Response, responseH
 		}()
 	}
 
-	// Start endless loop that read from responsChannel and publish on handlers channels
+	// Start endless loop that read from responseChannel and publish on handlers channels
 	go func() {
 		for {
 			resp := <-*responseChannel
