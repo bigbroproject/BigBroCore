@@ -2,7 +2,7 @@ package responsehandlers
 
 import (
 	"fmt"
-	"github.com/bigbrocore/models/response"
+	"github.com/bigbroproject/bigbrocore/models/response"
 	"github.com/fatih/color"
 	"log"
 	"strconv"

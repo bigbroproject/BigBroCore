@@ -3,11 +3,11 @@ package main
 import (
 	"fmt"
 	"github.com/fatih/color"
-	"github.com/bigbrocore/models"
-	"github.com/bigbrocore/models/response"
-	"github.com/bigbrocore/process"
-	"github.com/bigbrocore/protocols"
-	"github.com/bigbrocore/responsehandlers"
+	"github.com/bigbroproject/bigbrocore/models"
+	"github.com/bigbroproject/bigbrocore/models/response"
+	"github.com/bigbroproject/bigbrocore/process"
+	"github.com/bigbroproject/bigbrocore/protocols"
+	"github.com/bigbroproject/bigbrocore/responsehandlers"
 	"log"
 	"time"
 )

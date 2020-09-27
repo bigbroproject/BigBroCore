@@ -1,4 +1,4 @@
-module github.com/bigbrocore
+module github.com/bigbroproject/bigbrocore
 
 go 1.15
 

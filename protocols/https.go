@@ -1,7 +1,7 @@
 package protocols
 
 import (
-	"github.com/bigbrocore/models"
+	"github.com/bigbroproject/bigbrocore/models"
 	"net/http"
 	"strconv"
 	"time"

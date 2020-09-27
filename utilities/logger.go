@@ -2,7 +2,7 @@ package utilities
 
 import (
 	"fmt"
-	"github.com/bigbrocore/models"
+	"github.com/bigbroproject/bigbrocore/models"
 	"github.com/fatih/color"
 	"log"
 	"strconv"

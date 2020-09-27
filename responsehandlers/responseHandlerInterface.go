@@ -1,6 +1,6 @@
 package responsehandlers
 
-import "github.com/bigbrocore/models/response"
+import "github.com/bigbroproject/bigbrocore/models/response"
 
 type ResponseHandlerInterface interface {
 	Handle(*chan response.Response)

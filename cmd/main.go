@@ -1,8 +1,8 @@
 package main
 
 import (
-	protocols "github.com/bigbrocore/protocols"
-	"github.com/bigbrocore/responsehandlers"
+	protocols "github.com/bigbroproject/bigbrocore/protocols"
+	"github.com/bigbroproject/bigbrocore/responsehandlers"
 )
 
 func main() {
