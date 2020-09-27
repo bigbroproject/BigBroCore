@@ -2,21 +2,64 @@
 
 An extensible monitoring tool for user defined services and protocols, all wrote in GoLang.
 
+### Project status
+* This project is in **BETA stage**
+* Go version : **1.15**
+
 ## Introduction
 
-BigBro Core is the core library of the main project BigBro, it can be used in standalone way (without any web service or user interface, recommend for low spec devices (as OrangePi or others).
+BigBro Core is the core library of the main project BigBro, it can be used in standalone way (without any web service or user interface, recommend for low specs devices (as OrangePi or others).
 
-## Defaults Protocols supported
+## Defaults Protocols implemented
 - http
 - https (with ssl)
 - icmp
 - icmp6
 
 ## Configuration file
+In the configuration file will must be defined all services and protocol to be monitor. The format type of the file is YAML as follows:
+
+```yaml
+services:
+  - name: Facebook (ssl)
+    protocols:
+      - type: https
+        port: 443
+        server: facebook.com
+        interval : 1000
+  - name: Google
+    protocols:
+      - type: http
+        server: google.com
+        interval : 1000
+  - name: Google DNS
+    protocols:
+      - type: icmp
+        server: 8.8.8.8
+        interval : 1000
+  - name: Google DNS6
+    protocols:
+      - type: icmp6
+        server: 2a00:1450:400a:804::2004
+        interval : 5000
+      - type: ftp
+        server: 1.1.1.1
+        interval : 1000
+        customs :
+          user : uss
+          password : passwd
+  ...
+```
+* `name` : Name of the service
+* `protocols`: List of protocols that would be monitored
+    * `type`: name of registered protocol
+    * `server`: IP or dns of service
+    * `interval`: interval time between check (in milliseconds)
+    * `port`: (optional) port of service
+    * `customs`: (optional) list of custom filed for custom implementation of protocols
+
 
 ## Struct of the Core and implementation of custom protocols and handlers
-
-parlare della registrazione di protocolli e handlers
 
 BigBro core structured in two main parts: `protocolInterface` and `responseHandlerInterface`. 
 ### protocolInterface
@@ -115,6 +158,44 @@ func ( handler ConsoleHandler) Handle(channel *chan response.Response){
 }
 ```
 
+## Usage Example
+Firstly, before the usage of this library you must install this one as a go module:
+```bash
+go get -u github.com/bigbroproject/bigbrocore
+```
 
+After install process, you can create a main file for your project as follows:
+
+```go
+package main
+
+import (
+	"github.com/bigbroproject/bigbrocore/protocols"
+	"github.com/bigbroproject/bigbrocore/responsehandlers"
+)
+
+func main() {
+
+	regProtocolInterfaces, regResponseHandlerInterfaces := Initialize("PATH/TO/CONFIG_FILE.yml")
+
+	// Register custom protocol
+	protocols.RegisterProtocolInterface(&regProtocolInterfaces, "ftp", protocols.FTP{})
+
+	// Register custom Response Handler
+	responsehandlers.RegisterResponseHandlerInterface(&regResponseHandlerInterfaces, "consoleWithMemory", responsehandlers.ConsoleHandlerWithMemory{})
+	responsehandlers.RegisterResponseHandlerInterface(&regResponseHandlerInterfaces, "console", responsehandlers.ConsoleHandler{})
+
+	// Start monitoring
+	Start(regProtocolInterfaces, regResponseHandlerInterfaces)
+
+}
+```
+In this example we `Initialize` the entire module with a given configuration file path (you can mange this as a first input in your command line, for instance). 
+Secondly, you must define and register a ResponseHandler to manage the Responses from service checks (otherwise you cannot log or see anything) and then register a custom protocol, if needed.
+
+Finally, you can over your project main with the `Start` of the module. 
+
+---
+Made with ❤️ by [filirnd](http://github.com/filirnd) and [fedyfausto](http://github.com/fedyfausto)
 
 

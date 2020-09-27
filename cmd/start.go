@@ -14,15 +14,17 @@ import (
 	"time"
 )
 
-func Initialize() (map[string]protocols.ProtocolInterface, map[string]responsehandlers.ResponseHandlerInterface) {
+var _configPath string
+func Initialize(configPath string) (map[string]protocols.ProtocolInterface, map[string]responsehandlers.ResponseHandlerInterface) {
+	_configPath = configPath
 	return protocols.DefaultRegisteredProtocolInterfaces(), responsehandlers.DefaultRegisteredResponseHandlers()
 }
 
 func Start(registeredProtocolInterfaces map[string]protocols.ProtocolInterface, registeredResponseHandlerInterfaces map[string]responsehandlers.ResponseHandlerInterface) {
 
-	log.SetFlags(log.LstdFlags | log.Lshortfile)
 
-	conf, err := models.ConfigFromFile("config/conf.yml")
+
+	conf, err := models.ConfigFromFile(_configPath)
 	if err != nil {
 		log.Fatal(err)
 	}

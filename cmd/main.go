@@ -1,13 +1,19 @@
 package main
 
 import (
-	protocols "github.com/bigbroproject/bigbrocore/protocols"
+	"github.com/bigbroproject/bigbrocore/protocols"
 	"github.com/bigbroproject/bigbrocore/responsehandlers"
+	"os"
 )
 
 func main() {
 
-	regProtocolInterfaces, regResponseHandlerInterfaces := Initialize()
+	/*
+		for debug purposes
+		log.SetFlags(log.LstdFlags | log.Lshortfile)
+	*/
+
+	regProtocolInterfaces, regResponseHandlerInterfaces := Initialize(os.Args[1])
 
 	// Register custom protocol
 	protocols.RegisterProtocolInterface(&regProtocolInterfaces, "ftp", protocols.FTP{})
