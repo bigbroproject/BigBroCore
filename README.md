@@ -1,4 +1,8 @@
-# BigBro Core
+# BigBro Core 
+[![Build Status](https://travis-ci.org/bigbroproject/bigbrocore.svg?branch=master)](https://travis-ci.org/bigbroproject/bigbrocore) [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://https://github.com/bigbroproject/bigbrocore/master/LICENSE)
+[![made-with-Go](https://img.shields.io/badge/Made%20with-Go-1f425f.svg)](http://golang.org)
+[![GitHub go.mod Go version of a Go module](https://img.shields.io/github/go-mod/go-version/bigbroproject/bigbrocore.svg)](https://github.com/bigbroproject/bigbrocore)
+[![GitHub Release](https://img.shields.io/github/release/bigbroproject/bigbrocore.svg?style=flat)]()  
 
 An extensible monitoring tool for user defined services and protocols, all wrote in GoLang.
 
