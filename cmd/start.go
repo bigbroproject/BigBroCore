@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/fatih/color"
 	"github.com/bigbroproject/bigbrocore/models"
 	"github.com/bigbroproject/bigbrocore/models/response"
 	"github.com/bigbroproject/bigbrocore/process"
 	"github.com/bigbroproject/bigbrocore/protocols"
 	"github.com/bigbroproject/bigbrocore/responsehandlers"
+	"github.com/bigbroproject/bigbrocore/utilities"
+	"github.com/fatih/color"
 	"log"
 	"time"
 )
@@ -24,13 +25,12 @@ func Start(registeredProtocolInterfaces map[string]protocols.ProtocolInterface, 
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Printf("[%s] Configuration loaded!", color.New(color.FgHiBlue).SprintFunc()("Load"))
+	log.Printf("[%s] Configuration loaded!", utilities.CreateColorString("Load", color.FgHiBlue))
 	processesChannel := make(chan string)
 	responseChannel := make(chan response.Response)
 
 	startResponseBroadcaster(&responseChannel, &registeredResponseHandlerInterfaces)
-	log.Printf("[%s] Starting Handlers complete!", color.New(color.FgHiBlue).SprintFunc()("Complete"))
-
+	log.Printf("[%s] Starting Handlers complete!", utilities.CreateColorString("Complete", color.FgHiBlue))
 
 	if err != nil {
 		log.Fatal(err.Error())
@@ -67,19 +67,17 @@ func Start(registeredProtocolInterfaces map[string]protocols.ProtocolInterface, 
 		}
 	}
 
-
 	for {
 		time.Sleep(100 * time.Millisecond)
 	}
 }
 
-
-func startResponseBroadcaster(responseChannel *chan response.Response, responseHandlers *map[string]responsehandlers.ResponseHandlerInterface ) {
-	chanArray := make([]*chan response.Response,0)
+func startResponseBroadcaster(responseChannel *chan response.Response, responseHandlers *map[string]responsehandlers.ResponseHandlerInterface) {
+	chanArray := make([]*chan response.Response, 0)
 	// Create channels and start handlers
 	for _, handler := range *responseHandlers {
 		channel := make(chan response.Response)
-		chanArray = append(chanArray,&channel)
+		chanArray = append(chanArray, &channel)
 
 		// Start handler on created channel
 		handler := handler
@@ -91,7 +89,7 @@ func startResponseBroadcaster(responseChannel *chan response.Response, responseH
 	// Start endless loop that read from responsChannel and publish on handlers channels
 	go func() {
 		for {
-			resp := <- *responseChannel
+			resp := <-*responseChannel
 			for _, channel := range chanArray {
 				*channel <- resp
 			}

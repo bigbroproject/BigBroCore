@@ -31,7 +31,6 @@ func PrintStatus(service *models.Service, protocol *models.Protocol, err error) 
 	return message, err
 }
 
-func printColorString(str string, clr color.Attribute) {
-	color.New(color.FgHiBlue).SprintFunc()("Load")
-	log.Printf("%s", color.New(clr).SprintFunc()(str))
+func CreateColorString(str string, clr color.Attribute) string {
+	return color.New(clr).SprintFunc()(str)
 }
