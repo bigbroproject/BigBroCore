@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/bigbroproject/bigbrocore/core"
 	"github.com/bigbroproject/bigbrocore/protocols"
 	"github.com/bigbroproject/bigbrocore/responsehandlers"
 	"os"
@@ -13,7 +14,7 @@ func main() {
 		log.SetFlags(log.LstdFlags | log.Lshortfile)
 	*/
 
-	regProtocolInterfaces, regResponseHandlerInterfaces := Initialize(os.Args[1])
+	regProtocolInterfaces, regResponseHandlerInterfaces := core.Initialize(os.Args[1])
 
 	// Register custom protocol
 	protocols.RegisterProtocolInterface(&regProtocolInterfaces, "ftp", protocols.FTP{})
@@ -23,6 +24,6 @@ func main() {
 	responsehandlers.RegisterResponseHandlerInterface(&regResponseHandlerInterfaces, "console", responsehandlers.ConsoleHandler{})
 
 	// Start monitoring
-	Start(regProtocolInterfaces, regResponseHandlerInterfaces)
+	core.Start(regProtocolInterfaces, regResponseHandlerInterfaces)
 
 }

@@ -1,4 +1,4 @@
-package main
+package core
 
 import (
 	"fmt"
@@ -15,6 +15,7 @@ import (
 )
 
 var _configPath string
+
 func Initialize(configPath string) (map[string]protocols.ProtocolInterface, map[string]responsehandlers.ResponseHandlerInterface) {
 	_configPath = configPath
 	return protocols.DefaultRegisteredProtocolInterfaces(), responsehandlers.DefaultRegisteredResponseHandlers()
