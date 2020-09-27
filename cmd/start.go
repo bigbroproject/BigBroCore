@@ -10,6 +10,7 @@ import (
 	"github.com/bigbroproject/bigbrocore/utilities"
 	"github.com/fatih/color"
 	"log"
+	"strconv"
 	"time"
 )
 
@@ -61,7 +62,7 @@ func Start(registeredProtocolInterfaces map[string]protocols.ProtocolInterface, 
 
 			} else {
 				red := color.New(color.FgRed).SprintFunc()
-				log.Println(fmt.Sprintf("[%s] [%s] [%s] [%s - %s - %s] An error as accured: %s", red("ERRO"), time.Now().Format(time.RFC3339), service.Name, protocol.Type, protocol.Server, protocol.Port, "ProtocolInterface "+protocol.Type+" not registered!"))
+				log.Println(fmt.Sprintf("[%s] [%s] [%s] [%s - %s - %s] An error as accured: %s", red("ERRO"), time.Now().Format(time.RFC3339), service.Name, protocol.Type, protocol.Server, strconv.Itoa(protocol.Port), "ProtocolInterface "+protocol.Type+" not registered!"))
 			}
 
 		}
