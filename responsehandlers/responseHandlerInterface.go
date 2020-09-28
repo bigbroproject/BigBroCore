@@ -1,9 +1,16 @@
 package responsehandlers
 
-import "github.com/bigbroproject/bigbrocore/models/response"
+import (
+	"github.com/bigbroproject/bigbrocore/models"
+	"github.com/bigbroproject/bigbrocore/models/response"
+)
 
 type ResponseHandlerInterface interface {
-	Handle(*chan response.Response)
+
+	// Handle - manage the responses.
+	// configuration - is the same configuration model loaded from configFile.
+	// channel - is the channel where responses arrive from check processes.
+	Handle(*models.Config, *chan response.Response)
 }
 
 func RegisterResponseHandlerInterface(registeredResponseHandlerInterfaces *map[string]ResponseHandlerInterface, responseInterfaceName string, responseHandlerInterface ResponseHandlerInterface) {

@@ -148,8 +148,12 @@ import (
 
 type ConsoleHandler struct {}
 
-
-func ( handler ConsoleHandler) Handle(channel *chan response.Response){
+/*
+    Handle - manage the responses
+    configuration - is the same configuration model loaded from configFile
+    channel - is the channel where responses arrive from check processes 
+*/
+func ( handler ConsoleHandler) Handle(configuration *models.Config, channel *chan response.Response){
     for  { //the infinite loop
 	resp := <- *channel // the receiving response
 	if resp.ResponseType == response.Error {

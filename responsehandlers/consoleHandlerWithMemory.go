@@ -2,6 +2,7 @@ package responsehandlers
 
 import (
 	"fmt"
+	"github.com/bigbroproject/bigbrocore/models"
 	"github.com/bigbroproject/bigbrocore/models/response"
 	"github.com/fatih/color"
 	"log"
@@ -13,7 +14,7 @@ type ConsoleHandlerWithMemory struct {
 	ServiceProtocol map[string]response.ResponseType
 }
 
-func (handler ConsoleHandlerWithMemory) Handle(channel *chan response.Response) {
+func (handler ConsoleHandlerWithMemory) Handle(configuration *models.Config, channel *chan response.Response) {
 	handler.ServiceProtocol = make(map[string]response.ResponseType)
 	for {
 		resp := <-*channel
