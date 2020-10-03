@@ -23,8 +23,6 @@ func Initialize(configPath string) (map[string]protocols.ProtocolInterface, map[
 
 func Start(registeredProtocolInterfaces map[string]protocols.ProtocolInterface, registeredResponseHandlerInterfaces map[string]responsehandlers.ResponseHandlerInterface) {
 
-
-
 	conf, err := models.ConfigFromFile(_configPath)
 	if err != nil {
 		log.Fatal(err)
@@ -33,7 +31,7 @@ func Start(registeredProtocolInterfaces map[string]protocols.ProtocolInterface, 
 	processesChannel := make(chan string)
 	responseChannel := make(chan response.Response)
 
-	startResponseBroadcaster(&responseChannel, &registeredResponseHandlerInterfaces)
+	startResponseBroadcaster(conf, &responseChannel, &registeredResponseHandlerInterfaces)
 	log.Printf("[%s] Starting Handlers complete!", utilities.CreateColorString("Complete", color.FgHiBlue))
 
 	if err != nil {
@@ -76,7 +74,7 @@ func Start(registeredProtocolInterfaces map[string]protocols.ProtocolInterface, 
 	}
 }
 
-func startResponseBroadcaster(responseChannel *chan response.Response, responseHandlers *map[string]responsehandlers.ResponseHandlerInterface) {
+func startResponseBroadcaster(configuration *models.Config, responseChannel *chan response.Response, responseHandlers *map[string]responsehandlers.ResponseHandlerInterface) {
 	chanArray := make([]*chan response.Response, 0)
 	// Create channels and start handlers
 	for _, handler := range *responseHandlers {
@@ -86,7 +84,7 @@ func startResponseBroadcaster(responseChannel *chan response.Response, responseH
 		// Start handler on created channel
 		handler := handler
 		go func() {
-			handler.Handle(&channel)
+			handler.Handle(configuration, &channel)
 		}()
 	}
 

@@ -2,6 +2,7 @@ package responsehandlers
 
 import (
 	"fmt"
+	"github.com/bigbroproject/bigbrocore/models"
 	"github.com/bigbroproject/bigbrocore/models/response"
 	"github.com/fatih/color"
 	"log"
@@ -9,18 +10,18 @@ import (
 	"time"
 )
 
-type ConsoleHandler struct {}
+type ConsoleHandler struct{}
 
+func (handler ConsoleHandler) Handle(configuration *models.Config, channel *chan response.Response) {
 
-func ( handler ConsoleHandler) Handle(channel *chan response.Response){
-	for  {
-		resp := <- *channel
+	for {
+		resp := <-*channel
 		print(resp)
 	}
+
 }
 
-
-func print(resp response.Response){
+func print(resp response.Response) {
 	now := time.Now()
 	port := strconv.Itoa(resp.Protocol.Port)
 	message := ""
