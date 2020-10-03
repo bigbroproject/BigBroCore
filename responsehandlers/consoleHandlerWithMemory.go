@@ -23,9 +23,10 @@ func (handler ConsoleHandlerWithMemory) Handle(configuration *models.Config, cha
 }
 
 func printIfChange(resp response.Response, c *ConsoleHandlerWithMemory) {
-	respType := c.ServiceProtocol[resp.ServiceName+resp.Protocol.Server+strconv.Itoa(resp.Protocol.Port)+resp.Protocol.Type]
+	key := resp.ServiceName+resp.Protocol.Server+strconv.Itoa(resp.Protocol.Port)+resp.Protocol.Type
+	respType := c.ServiceProtocol[key]
 	if respType != resp.ResponseType {
-		c.ServiceProtocol[resp.ServiceName+resp.Protocol.Type] = resp.ResponseType
+		c.ServiceProtocol[key] = resp.ResponseType
 		now := time.Now()
 		port := strconv.Itoa(resp.Protocol.Port)
 		message := ""
