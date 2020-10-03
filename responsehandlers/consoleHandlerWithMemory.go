@@ -22,7 +22,7 @@ func (handler ConsoleHandlerWithMemory) Handle(channel *chan response.Response) 
 }
 
 func printIfChange(resp response.Response, c *ConsoleHandlerWithMemory) {
-	respType := c.ServiceProtocol[resp.ServiceName+resp.Protocol.Type]
+	respType := c.ServiceProtocol[resp.ServiceName+resp.Protocol.Server+strconv.Itoa(resp.Protocol.Port)+resp.Protocol.Type]
 	if respType != resp.ResponseType {
 		c.ServiceProtocol[resp.ServiceName+resp.Protocol.Type] = resp.ResponseType
 		now := time.Now()
