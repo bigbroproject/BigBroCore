@@ -1,3 +1,5 @@
+install-dep:
+	@go get -u -v all ./...
 credits:
 	@echo "Made with ❤️ by [filirnd](http://github.com/filirnd) and [fedyfausto](http://github.com/fedyfausto)"
 build:

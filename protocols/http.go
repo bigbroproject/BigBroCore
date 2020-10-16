@@ -2,28 +2,28 @@ package protocols
 
 import (
 	"github.com/bigbroproject/bigbrocore/models"
-	httplib "net/http"
+	"net/http"
 	"strconv"
 	"time"
 )
 
-type Http struct {
-}
+type Http struct {}
 
+
+var clientHttp =  &http.Client{Timeout: time.Second * 10}
 // If error is nil, then service is up
-func (http Http) CheckService(Protocol models.Protocol) error {
+func (httpVar Http) CheckService(Protocol models.Protocol) error {
 	// CHECK
-	tr := &httplib.Transport{
-		MaxIdleConns:    10,
-		IdleConnTimeout: 30 * time.Second,
-	}
-	client := &httplib.Client{Transport: tr}
 	url := "http://" + Protocol.Server
 	if Protocol.Port == 0 {
 		url += ":80"
 	} else {
 		url += ":" + strconv.Itoa(Protocol.Port)
 	}
-	_, err := client.Get(url)
+	resp, err := clientHttp.Get(url)
+	if resp != nil {
+		_ = resp.Body.Close()
+		resp = nil
+	}
 	return err
 }

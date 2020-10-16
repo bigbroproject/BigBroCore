@@ -22,7 +22,6 @@ ScheduleProcess manage the schedule of Process instance, defying a interval time
 func ScheduleProcess(process *Process, ms int64) {
 	ticker := time.NewTicker(time.Duration(ms) * time.Millisecond)
 	done := make(chan struct{})
-
 	go func() {
 		for {
 			select {
