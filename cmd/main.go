@@ -4,11 +4,7 @@ import (
 	"github.com/bigbroproject/bigbrocore/core"
 	"github.com/bigbroproject/bigbrocore/protocols"
 	"github.com/bigbroproject/bigbrocore/responsehandlers"
-	"log"
 	"os"
-	"runtime"
-	"strconv"
-	"time"
 )
 
 func main() {
@@ -28,12 +24,12 @@ func main() {
 	//responsehandlers.RegisterResponseHandlerInterface(&regResponseHandlerInterfaces, "console", responsehandlers.ConsoleHandler{})
 
 	// Only for debugging
-	go func() {
-		for  {
-			log.Println("ACTIVE GOROUTINES :"+strconv.Itoa(runtime.NumGoroutine()))
-			time.Sleep(time.Second * 1)
-		}
-	}()
+	//go func() {
+	//	for  {
+	//		log.Println("ACTIVE GOROUTINES :"+strconv.Itoa(runtime.NumGoroutine()))
+	//		time.Sleep(time.Second * 1)
+	//	}
+	//}()
 	// Start monitoring
 	core.Start(regProtocolInterfaces, regResponseHandlerInterfaces)
 
